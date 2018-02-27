@@ -22,7 +22,7 @@ function varargout = tugas1(varargin)
 
 % Edit the above text to modify the response to help tugas1
 
-% Last Modified by GUIDE v2.5 16-Feb-2018 13:50:06
+% Last Modified by GUIDE v2.5 24-Feb-2018 16:37:05
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -193,7 +193,9 @@ function BrightnessSum_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 image = getimage(handles.axes1);
-hasil(:,:,:) = 30+image(:,:,:);
+x = get(handles.jumlah,'String');
+y = str2num(x);
+hasil(:,:,:) = y+image(:,:,:);
 guidata(hObject,handles);
 axes(handles.axes1);
 imshow(hasil);
@@ -205,7 +207,9 @@ function BrightnessTimes_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 image = getimage(handles.axes1);
-hasil(:,:,:) = 3*image(:,:,:);
+x = get(handles.jumlah,'String');
+y = str2num(x);
+hasil(:,:,:) = y*image(:,:,:);
 guidata(hObject,handles);
 axes(handles.axes1);
 imshow(hasil);
@@ -217,7 +221,9 @@ function GelapSubs_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 image = getimage(handles.axes1);
-hasil(:,:,:) = image(:,:,:)-30;
+x = get(handles.jumlah,'String');
+y = str2num(x);
+hasil(:,:,:) = image(:,:,:)-y;
 guidata(hObject,handles);
 axes(handles.axes1);
 imshow(hasil);
@@ -228,7 +234,9 @@ function GelapDiv_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 image = getimage(handles.axes1);
-hasil(:,:,:) = image(:,:,:)/3;
+x = get(handles.jumlah,'String');
+y = str2num(x);
+hasil(:,:,:) = image(:,:,:)/y;
 guidata(hObject,handles);
 axes(handles.axes1);
 imshow(hasil);
@@ -280,6 +288,119 @@ imshow(hasil);
 % --- Executes on button press in rotate.
 function rotate_Callback(hObject, eventdata, handles)
 % hObject    handle to rotate (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+image = getimage(handles.axes1);
+hasil = zeros(size(image,2),size(image,1),3);
+for i= 1:size(image,2);
+    for j=1:size(image,1);
+        hasil(i,j,:) = image(j,i,:);
+    end
+end
+hasil = uint8(hasil);
+guidata(hObject,handles);
+axes(handles.axes1);
+set(handles.resolusi, 'String', showResolusi(hasil));
+imshow(hasil);
+
+
+
+function jumlah_Callback(hObject, eventdata, handles)
+% hObject    handle to jumlah (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of jumlah as text
+%        str2double(get(hObject,'String')) returns contents of jumlah as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function jumlah_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to jumlah (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in histogram.
+function histogram_Callback(hObject, eventdata, handles)
+% hObject    handle to histogram (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+image = getimage(handles.axes1);
+hasilred = zeros(256,1);
+hasilgreen = zeros(256,1);
+hasilblue = zeros(256,1);
+for i =1:size(image,1)
+    for j = 1:size(image,2)
+        x = image(i,j,1)+1;
+        y = image(i,j,2)+1;
+        z = image(i,j,3)+1;
+        hasilred(x) = hasilred(x)+1;
+        hasilgreen(y) = hasilgreen(y)+1;
+        hasilblue(z) = hasilblue(z)+1;
+    end
+end
+axes(handles.axes2);
+plot(hasilred);
+axes(handles.axes3);
+plot(hasilgreen);
+axes(handles.axes4);
+plot(hasilblue);
+axes(handles.axes1);
+imshow(image);
+
+
+% --- Executes on button press in rotasi180.
+function rotasi180_Callback(hObject, eventdata, handles)
+% hObject    handle to rotasi180 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+image = getimage(handles.axes1);
+hasil(:,:,:) = image(:,:,:);
+m =1; n=1;
+for i=size(image,1):-1:1
+    for j=size(image,2):-1:1
+        hasil(m,n,:) = image(i,j,:);
+        n = n+1;
+    end
+    m=m+1;
+    n=1;
+end
+hasil = uint8(hasil);
+guidata(hObject,handles);
+axes(handles.axes1);
+imshow(hasil);
+
+% --- Executes on button press in rotasi90.
+function rotasi90_Callback(hObject, eventdata, handles)
+% hObject    handle to rotasi90 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+image = getimage(handles.axes1);
+hasil = zeros(size(image,2),size(image,1),3);
+
+for i= 1:size(hasil,1);
+    m = size(hasil,1);
+    for j=1:size(hasil,2);
+        hasil(i,j,:) = image(m,i,:);
+        m =m-1;
+    end
+end
+hasil = uint8(hasil);
+guidata(hObject,handles);
+axes(handles.axes1);
+set(handles.resolusi, 'String', showResolusi(hasil));
+imshow(hasil);
+
+% --- Executes on button press in rotasi270.
+function rotasi270_Callback(hObject, eventdata, handles)
+% hObject    handle to rotasi270 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 image = getimage(handles.axes1);
