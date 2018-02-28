@@ -385,9 +385,9 @@ function rotasi90_Callback(hObject, eventdata, handles)
 image = getimage(handles.axes1);
 hasil = zeros(size(image,2),size(image,1),3);
 
-for i= 1:size(hasil,1);
-    m = size(hasil,1);
-    for j=1:size(hasil,2);
+for i= 1:size(hasil,1)
+    m = size(image,1);
+    for j=1:size(hasil,2)
         hasil(i,j,:) = image(m,i,:);
         m =m-1;
     end
@@ -405,10 +405,15 @@ function rotasi270_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 image = getimage(handles.axes1);
 hasil = zeros(size(image,2),size(image,1),3);
-for i= 1:size(image,2);
-    for j=1:size(image,1);
-        hasil(i,j,:) = image(j,i,:);
+
+n = size(image,2);
+for i= 1:size(hasil,1)
+    m= 1;
+    for j=1:size(hasil,2)
+        hasil(i,j,:) = image(m,n,:);
+        m = m+1;
     end
+    n= n-1;
 end
 hasil = uint8(hasil);
 guidata(hObject,handles);
