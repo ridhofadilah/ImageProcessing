@@ -22,7 +22,7 @@ function varargout = tugas1(varargin)
 
 % Edit the above text to modify the response to help tugas1
 
-% Last Modified by GUIDE v2.5 24-Feb-2018 16:37:05
+% Last Modified by GUIDE v2.5 15-Mar-2018 00:41:36
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -420,3 +420,319 @@ guidata(hObject,handles);
 axes(handles.axes1);
 set(handles.resolusi, 'String', showResolusi(hasil));
 imshow(hasil);
+
+
+% --- Executes on button press in blurring.
+function blurring_Callback(hObject, eventdata, handles)
+% hObject    handle to blurring (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+I = getimage(handles.axes1);
+[x y z] = size(I);
+blurVal = 10;
+for i=1:x
+    posisi = 1;
+    for j=1:y
+        %mengambil warna 
+        if (posisi == 1)
+            wrnRed = I(i,j,1);
+            wrnGreen = I(i,j,2);
+            wrnBlue = I(i,j,3);
+        end
+        %manipulasi warna dimensi/matrix
+        img(i,j,1) = wrnRed;
+        img(i,j,2) = wrnGreen;
+        img(i,j,3) = wrnBlue;
+        posisi = posisi + 1; 
+        if(posisi > blurVal)
+            posisi = 1;
+        end
+    end
+end
+OUT = uint8(img);
+imshow(img);
+
+
+% --- Executes on button press in edgedetect.
+function edgedetect_Callback(hObject, eventdata, handles)
+% hObject    handle to edgedetect (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+image = getimage(handles.axes1);
+[k l m] = size(image);
+Mask = [0 1 0; 1 -4 1; 0 1 0];
+newImage = uint8(zeros([k l m]));
+for h=1:m
+    for i=2:k-1
+        for j=2:l-1
+            newImage(i,j,h) = image(i-1,j-1,h)*Mask(1,1) + image(i-1,j,h)*Mask(1,2) + image(i-1,j+1,h)*Mask(1,3) + image(i,j-1,h)*Mask(2,1) + image(i,j,h)*Mask(2,2) + image(i,j+1,h)*Mask(2,3) + image(i+1,j-1,h)*Mask(3,1) + image(i+1,j,h)*Mask(3,2) + image(i+1,j+1,h)*Mask(3,3);
+        end;
+    end;
+end;
+newImage = uint8(newImage);
+imshow(newImage);
+
+
+% --- Executes on button press in sharp.
+function sharp_Callback(hObject, eventdata, handles)
+% hObject    handle to sharp (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+image = getimage(handles.axes1);
+[k l m] = size(image);
+Mask = [0 -1 0; -1 5 -1; 0 -1 0];
+newImage = uint8(zeros([k l m]));
+for h=1:m
+    for i=2:k-1
+        for j=2:l-1
+            newImage(i,j,h) = image(i-1,j-1,h)*Mask(1,1) + image(i-1,j,h)*Mask(1,2) + image(i-1,j+1,h)*Mask(1,3) + image(i,j-1,h)*Mask(2,1) + image(i,j,h)*Mask(2,2) + image(i,j+1,h)*Mask(2,3) + image(i+1,j-1,h)*Mask(3,1) + image(i+1,j,h)*Mask(3,2) + image(i+1,j+1,h)*Mask(3,3);
+        end;
+    end;
+end;
+newImage = uint8(newImage);
+imshow(newImage);
+
+
+
+function m11_Callback(hObject, eventdata, handles)
+% hObject    handle to m11 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of m11 as text
+%        str2double(get(hObject,'String')) returns contents of m11 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function m11_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to m11 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function m12_Callback(hObject, eventdata, handles)
+% hObject    handle to m12 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of m12 as text
+%        str2double(get(hObject,'String')) returns contents of m12 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function m12_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to m12 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function m13_Callback(hObject, eventdata, handles)
+% hObject    handle to m13 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of m13 as text
+%        str2double(get(hObject,'String')) returns contents of m13 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function m13_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to m13 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function m21_Callback(hObject, eventdata, handles)
+% hObject    handle to m21 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of m21 as text
+%        str2double(get(hObject,'String')) returns contents of m21 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function m21_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to m21 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function m22_Callback(hObject, eventdata, handles)
+% hObject    handle to m22 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of m22 as text
+%        str2double(get(hObject,'String')) returns contents of m22 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function m22_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to m22 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function m23_Callback(hObject, eventdata, handles)
+% hObject    handle to m23 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of m23 as text
+%        str2double(get(hObject,'String')) returns contents of m23 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function m23_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to m23 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function m31_Callback(hObject, eventdata, handles)
+% hObject    handle to m31 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of m31 as text
+%        str2double(get(hObject,'String')) returns contents of m31 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function m31_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to m31 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function m32_Callback(hObject, eventdata, handles)
+% hObject    handle to m32 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of m32 as text
+%        str2double(get(hObject,'String')) returns contents of m32 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function m32_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to m32 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function m33_Callback(hObject, eventdata, handles)
+% hObject    handle to m33 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of m33 as text
+%        str2double(get(hObject,'String')) returns contents of m33 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function m33_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to m33 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in konvolusi.
+function konvolusi_Callback(hObject, eventdata, handles)
+% hObject    handle to konvolusi (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+a = get(handles.m11,'String');
+b11 = str2num(a);
+a = get(handles.m12,'String');
+b12 = str2num(a);
+a = get(handles.m13,'String');
+b13 = str2num(a);
+a = get(handles.m21,'String');
+b21 = str2num(a);
+a = get(handles.m22,'String');
+b22 = str2num(a);
+a = get(handles.m23,'String');
+b23 = str2num(a);
+a = get(handles.m31,'String');
+b31 = str2num(a);
+a = get(handles.m32,'String');
+b32 = str2num(a);
+a = get(handles.m33,'String');
+b33 = str2num(a);
+image = getimage(handles.axes1);
+[k l m] = size(image);
+Mask = [b11 b12 b13; b21 b22 b23; b31 b32 b33];
+newImage = uint8(zeros([k l m]));
+for h=1:m
+    for i=2:k-1
+        for j=2:l-1
+            newImage(i,j,h) = image(i-1,j-1,h)*Mask(1,1) + image(i-1,j,h)*Mask(1,2) + image(i-1,j+1,h)*Mask(1,3) + image(i,j-1,h)*Mask(2,1) + image(i,j,h)*Mask(2,2) + image(i,j+1,h)*Mask(2,3) + image(i+1,j-1,h)*Mask(3,1) + image(i+1,j,h)*Mask(3,2) + image(i+1,j+1,h)*Mask(3,3);
+        end;
+    end;
+end;
+newImage = uint8(newImage);
+imshow(newImage);
