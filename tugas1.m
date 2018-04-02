@@ -22,7 +22,7 @@ function varargout = tugas1(varargin)
 
 % Edit the above text to modify the response to help tugas1
 
-% Last Modified by GUIDE v2.5 15-Mar-2018 00:41:36
+% Last Modified by GUIDE v2.5 02-Apr-2018 16:02:45
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -98,8 +98,8 @@ GREEN = image(:,:,2);
 BLUE = image(:,:,3);
 gray = 0.4*RED + 0.4*GREEN + 0.2*BLUE;
 guidata(hObject,handles);
-axes(handles.axes1);
-
+set(handles.resolusi2, 'String', showResolusi(image));
+axes(handles.axes6);
 imshow(gray);
 
 
@@ -134,7 +134,8 @@ for i = 1:size(image,1)
 end
 newImage = uint8(newImage);
 guidata(hObject,handles);
-set(handles.resolusi, 'String', showResolusi(newImage));
+set(handles.resolusi2, 'String', showResolusi(newImage));
+axes(handles.axes6);
 figure, imshow(newImage);
 
 % --- Executes on button press in zoomoutButton.
@@ -155,7 +156,8 @@ for i = 1:size(newImage,1)
 end
 newImage = uint8(newImage);
 guidata(hObject,handles);
-set(handles.resolusi, 'String', showResolusi(newImage));
+set(handles.resolusi2, 'String', showResolusi(newImage));
+axes(handles.axes6);
 figure, imshow(newImage);
 
 
@@ -167,7 +169,8 @@ function inverseButton_Callback(hObject, eventdata, handles)
 image = getimage(handles.axes1);
 hasil(:,:,:) = 255-image(:,:,:);
 guidata(hObject,handles);
-axes(handles.axes1);
+set(handles.resolusi2, 'String', showResolusi(image));
+axes(handles.axes6);
 imshow(hasil);
 
 
@@ -183,7 +186,8 @@ row = newRow./2;
 column = newColumn./2;
 img = zeros(newRow,newColumn,3);
 img = image(round(row):(newRow+round(row)),round(column):(newColumn+round(column)),:);
-set(handles.resolusi, 'String', showResolusi(img));
+set(handles.resolusi2, 'String', showResolusi(img));
+axes(handles.axes6);
 imshow(img);
 
 
@@ -197,7 +201,8 @@ x = get(handles.jumlah,'String');
 y = str2num(x);
 hasil(:,:,:) = y+image(:,:,:);
 guidata(hObject,handles);
-axes(handles.axes1);
+set(handles.resolusi2, 'String', showResolusi(hasil));
+axes(handles.axes6);
 imshow(hasil);
 
 
@@ -211,7 +216,8 @@ x = get(handles.jumlah,'String');
 y = str2num(x);
 hasil(:,:,:) = y*image(:,:,:);
 guidata(hObject,handles);
-axes(handles.axes1);
+set(handles.resolusi2, 'String', showResolusi(hasil));
+axes(handles.axes6);
 imshow(hasil);
 
 
@@ -225,7 +231,8 @@ x = get(handles.jumlah,'String');
 y = str2num(x);
 hasil(:,:,:) = image(:,:,:)-y;
 guidata(hObject,handles);
-axes(handles.axes1);
+set(handles.resolusi2, 'String', showResolusi(hasil));
+axes(handles.axes6);
 imshow(hasil);
 
 % --- Executes on button press in GelapDiv.
@@ -238,7 +245,8 @@ x = get(handles.jumlah,'String');
 y = str2num(x);
 hasil(:,:,:) = image(:,:,:)/y;
 guidata(hObject,handles);
-axes(handles.axes1);
+set(handles.resolusi2, 'String', showResolusi(hasil));
+axes(handles.axes6);
 imshow(hasil);
 
 
@@ -260,7 +268,8 @@ for i=size(image,1):-1:1
 end
 hasil = uint8(hasil);
 guidata(hObject,handles);
-axes(handles.axes1);
+set(handles.resolusi2, 'String', showResolusi(hasil));
+axes(handles.axes6);
 imshow(hasil);
 
 
@@ -282,7 +291,8 @@ for i=1:size(image,1)
 end
 hasil = uint8(hasil);
 guidata(hObject,handles);
-axes(handles.axes1);
+set(handles.resolusi2, 'String', showResolusi(hasil));
+axes(handles.axes6);
 imshow(hasil);
 
 % --- Executes on button press in rotate.
@@ -299,8 +309,8 @@ for i= 1:size(image,2);
 end
 hasil = uint8(hasil);
 guidata(hObject,handles);
-axes(handles.axes1);
-set(handles.resolusi, 'String', showResolusi(hasil));
+set(handles.resolusi2, 'String', showResolusi(hasil));
+axes(handles.axes6);
 imshow(hasil);
 
 
@@ -346,13 +356,15 @@ for i =1:size(image,1)
         hasilblue(z) = hasilblue(z)+1;
     end
 end
+
+set(handles.resolusi2, 'String', showResolusi(image));
 axes(handles.axes2);
 plot(hasilred);
 axes(handles.axes3);
 plot(hasilgreen);
 axes(handles.axes4);
 plot(hasilblue);
-axes(handles.axes1);
+axes(handles.axes6);
 imshow(image);
 
 
@@ -374,7 +386,8 @@ for i=size(image,1):-1:1
 end
 hasil = uint8(hasil);
 guidata(hObject,handles);
-axes(handles.axes1);
+set(handles.resolusi2, 'String', showResolusi(hasil));
+axes(handles.axes6);
 imshow(hasil);
 
 % --- Executes on button press in rotasi90.
@@ -394,8 +407,8 @@ for i= 1:size(hasil,1)
 end
 hasil = uint8(hasil);
 guidata(hObject,handles);
-axes(handles.axes1);
-set(handles.resolusi, 'String', showResolusi(hasil));
+set(handles.resolusi2, 'String', showResolusi(hasil));
+axes(handles.axes6);
 imshow(hasil);
 
 % --- Executes on button press in rotasi270.
@@ -417,8 +430,8 @@ for i= 1:size(hasil,1)
 end
 hasil = uint8(hasil);
 guidata(hObject,handles);
-axes(handles.axes1);
-set(handles.resolusi, 'String', showResolusi(hasil));
+set(handles.resolusi2, 'String', showResolusi(hasil));
+axes(handles.axes6);
 imshow(hasil);
 
 
@@ -427,30 +440,31 @@ function blurring_Callback(hObject, eventdata, handles)
 % hObject    handle to blurring (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-I = getimage(handles.axes1);
-[x y z] = size(I);
-blurVal = 10;
-for i=1:x
-    posisi = 1;
-    for j=1:y
-        %mengambil warna 
-        if (posisi == 1)
-            wrnRed = I(i,j,1);
-            wrnGreen = I(i,j,2);
-            wrnBlue = I(i,j,3);
-        end
-        %manipulasi warna dimensi/matrix
-        img(i,j,1) = wrnRed;
-        img(i,j,2) = wrnGreen;
-        img(i,j,3) = wrnBlue;
-        posisi = posisi + 1; 
-        if(posisi > blurVal)
-            posisi = 1;
+image = getimage(handles.axes1);
+[n l m] = size(image);
+x = 1/9;
+Mask = [x x x; x x x; x x x];
+img = zeros(n+2, l+2, m);
+for i = 1:m
+    for j = 1:l
+        for k = 1:n
+            img(j+1,k+1,i) = image(j,k,i);
         end
     end
 end
-OUT = uint8(img);
-imshow(img);
+newImage = zeros(n+2, l+2, m);
+[k l m] = size(img);
+for h=1:m
+    for i=2:k-1
+        for j=2:l-1
+            newImage(i,j,h) = img(i-1,j-1,h)*Mask(1,1) + img(i-1,j,h)*Mask(1,2) + img(i-1,j+1,h)*Mask(1,3) + img(i,j-1,h)*Mask(2,1) + img(i,j,h)*Mask(2,2) + img(i,j+1,h)*Mask(2,3) + img(i+1,j-1,h)*Mask(3,1) + img(i+1,j,h)*Mask(3,2) + img(i+1,j+1,h)*Mask(3,3);
+        end;
+    end;
+end;
+newImage = uint8(newImage);
+set(handles.resolusi2, 'String', showResolusi(newImage));
+axes(handles.axes6);
+imshow(newImage);
 
 
 % --- Executes on button press in edgedetect.
@@ -459,17 +473,28 @@ function edgedetect_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 image = getimage(handles.axes1);
-[k l m] = size(image);
+[n l m] = size(image);
 Mask = [0 1 0; 1 -4 1; 0 1 0];
-newImage = uint8(zeros([k l m]));
+img = zeros(n+2, l+2, m);
+for i = 1:m
+    for j = 1:l
+        for k = 1:n
+            img(j+1,k+1,i) = image(j,k,i);
+        end
+    end
+end
+newImage = zeros(n+2, l+2, m);
+[k l m] = size(img);
 for h=1:m
     for i=2:k-1
         for j=2:l-1
-            newImage(i,j,h) = image(i-1,j-1,h)*Mask(1,1) + image(i-1,j,h)*Mask(1,2) + image(i-1,j+1,h)*Mask(1,3) + image(i,j-1,h)*Mask(2,1) + image(i,j,h)*Mask(2,2) + image(i,j+1,h)*Mask(2,3) + image(i+1,j-1,h)*Mask(3,1) + image(i+1,j,h)*Mask(3,2) + image(i+1,j+1,h)*Mask(3,3);
+            newImage(i,j,h) = img(i-1,j-1,h)*Mask(1,1) + img(i-1,j,h)*Mask(1,2) + img(i-1,j+1,h)*Mask(1,3) + img(i,j-1,h)*Mask(2,1) + img(i,j,h)*Mask(2,2) + img(i,j+1,h)*Mask(2,3) + img(i+1,j-1,h)*Mask(3,1) + img(i+1,j,h)*Mask(3,2) + img(i+1,j+1,h)*Mask(3,3);
         end;
     end;
 end;
 newImage = uint8(newImage);
+set(handles.resolusi2, 'String', showResolusi(newImage));
+axes(handles.axes6);
 imshow(newImage);
 
 
@@ -479,17 +504,28 @@ function sharp_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 image = getimage(handles.axes1);
-[k l m] = size(image);
+[n l m] = size(image);
 Mask = [0 -1 0; -1 5 -1; 0 -1 0];
-newImage = uint8(zeros([k l m]));
+img = zeros(n+2, l+2, m);
+for i = 1:m
+    for j = 1:l
+        for k = 1:n
+            img(j+1,k+1,i) = image(j,k,i);
+        end
+    end
+end
+newImage = zeros(n+2, l+2, m);
+[k l m] = size(img);
 for h=1:m
     for i=2:k-1
         for j=2:l-1
-            newImage(i,j,h) = image(i-1,j-1,h)*Mask(1,1) + image(i-1,j,h)*Mask(1,2) + image(i-1,j+1,h)*Mask(1,3) + image(i,j-1,h)*Mask(2,1) + image(i,j,h)*Mask(2,2) + image(i,j+1,h)*Mask(2,3) + image(i+1,j-1,h)*Mask(3,1) + image(i+1,j,h)*Mask(3,2) + image(i+1,j+1,h)*Mask(3,3);
+            newImage(i,j,h) = img(i-1,j-1,h)*Mask(1,1) + img(i-1,j,h)*Mask(1,2) + img(i-1,j+1,h)*Mask(1,3) + img(i,j-1,h)*Mask(2,1) + img(i,j,h)*Mask(2,2) + img(i,j+1,h)*Mask(2,3) + img(i+1,j-1,h)*Mask(3,1) + img(i+1,j,h)*Mask(3,2) + img(i+1,j+1,h)*Mask(3,3);
         end;
     end;
 end;
 newImage = uint8(newImage);
+set(handles.resolusi2, 'String', showResolusi(newImage));
+axes(handles.axes6);
 imshow(newImage);
 
 
@@ -723,16 +759,94 @@ a = get(handles.m32,'String');
 b32 = str2num(a);
 a = get(handles.m33,'String');
 b33 = str2num(a);
-image = getimage(handles.axes1);
-[k l m] = size(image);
 Mask = [b11 b12 b13; b21 b22 b23; b31 b32 b33];
-newImage = uint8(zeros([k l m]));
+image = getimage(handles.axes1);
+[n l m] = size(image);
+img = zeros(n+2, l+2, m);
+for i = 1:m
+    for j = 1:l
+        for k = 1:n
+            img(j+1,k+1,i) = image(j,k,i);
+        end
+    end
+end
+newImage = zeros(n+2, l+2, m);
+[k l m] = size(img);
 for h=1:m
     for i=2:k-1
         for j=2:l-1
-            newImage(i,j,h) = image(i-1,j-1,h)*Mask(1,1) + image(i-1,j,h)*Mask(1,2) + image(i-1,j+1,h)*Mask(1,3) + image(i,j-1,h)*Mask(2,1) + image(i,j,h)*Mask(2,2) + image(i,j+1,h)*Mask(2,3) + image(i+1,j-1,h)*Mask(3,1) + image(i+1,j,h)*Mask(3,2) + image(i+1,j+1,h)*Mask(3,3);
+            newImage(i,j,h) = img(i-1,j-1,h)*Mask(1,1) + img(i-1,j,h)*Mask(1,2) + img(i-1,j+1,h)*Mask(1,3) + img(i,j-1,h)*Mask(2,1) + img(i,j,h)*Mask(2,2) + img(i,j+1,h)*Mask(2,3) + img(i+1,j-1,h)*Mask(3,1) + img(i+1,j,h)*Mask(3,2) + img(i+1,j+1,h)*Mask(3,3);
         end;
     end;
 end;
 newImage = uint8(newImage);
+set(handles.resolusi2, 'String', showResolusi(newImage));
+axes(handles.axes6);
 imshow(newImage);
+
+
+% --- Executes on button press in meanFiltering.
+function meanFiltering_Callback(hObject, eventdata, handles)
+% hObject    handle to meanFiltering (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+img = getimage(handles.axes1);
+result = zeros(size(img));
+[r g b] = size(result);
+
+for i = 1:b
+    for j = 2:r-1
+        for k = 2:g-1
+            A = [img(j-1,k-1,i); img(j-1,k,i); img(j-1,k+1,i); img(j,k-1,i); img(j,k,i); img(j,k+1,i); img(j+1,k-1,i); img(j+1,k,i); img(j+1,k+1,i)];
+            result(j,k,i) = round(mean(A));
+        end
+    end
+end
+img = uint8(result);
+set(handles.resolusi2, 'String', showResolusi(img));
+axes(handles.axes6);
+imshow(img);
+
+% --- Executes on button press in medianFiltering.
+function medianFiltering_Callback(hObject, eventdata, handles)
+% hObject    handle to medianFiltering (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+img = getimage(handles.axes1);
+result = zeros(size(img));
+[r g b] = size(result);
+
+for i = 1:b
+    for j = 2:r-1
+        for k = 2:g-1
+            A = [img(j-1,k-1,i); img(j-1,k,i); img(j-1,k+1,i); img(j,k-1,i); img(j,k,i); img(j,k+1,i); img(j+1,k-1,i); img(j+1,k,i); img(j+1,k+1,i)];
+            result(j,k,i) = round(median(A));
+        end
+    end
+end
+img = uint8(result);
+set(handles.resolusi2, 'String', showResolusi(img));
+axes(handles.axes6);
+imshow(img);
+
+% --- Executes on button press in modusFiltering.
+function modusFiltering_Callback(hObject, eventdata, handles)
+% hObject    handle to modusFiltering (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+img = getimage(handles.axes1);
+result = zeros(size(img));
+[r g b] = size(result);
+
+for i = 1:b
+    for j = 2:r-1
+        for k = 2:g-1
+            A = [img(j-1,k-1,i); img(j-1,k,i); img(j-1,k+1,i); img(j,k-1,i); img(j,k,i); img(j,k+1,i); img(j+1,k-1,i); img(j+1,k,i); img(j+1,k+1,i)];
+            result(j,k,i) = mode(A);
+        end
+    end
+end
+img = uint8(result);
+set(handles.resolusi2, 'String', showResolusi(img));
+axes(handles.axes6);
+imshow(img);
