@@ -22,7 +22,7 @@ function varargout = tugas1(varargin)
 
 % Edit the above text to modify the response to help tugas1
 
-% Last Modified by GUIDE v2.5 02-Apr-2018 16:02:45
+% Last Modified by GUIDE v2.5 05-Apr-2018 08:30:44
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -85,20 +85,22 @@ guidata(hObject,handles);
 axes(handles.axes1);
 set(handles.resolusi, 'String', showResolusi(img));
 imshow(img);
-
+axes(handles.axes6);
+set(handles.resolusi2, 'String', showResolusi(img));
+imshow(img);
 
 % --- Executes on button press in grayscaleButton.
 function grayscaleButton_Callback(hObject, eventdata, handles)
 % hObject    handle to grayscaleButton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-image = getimage(handles.axes1);
+image = getimage(handles.axes6);
 RED = image(:,:,1);
 GREEN = image(:,:,2);
 BLUE = image(:,:,3);
 gray = 0.4*RED + 0.4*GREEN + 0.2*BLUE;
 guidata(hObject,handles);
-set(handles.resolusi2, 'String', showResolusi(image));
+set(handles.resolusi2, 'String', showResolusi(gray));
 axes(handles.axes6);
 imshow(gray);
 
@@ -109,7 +111,7 @@ function zoominButton_Callback(hObject, eventdata, handles)
 % hObject    handle to zoominButton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-image = getimage(handles.axes1);
+image = getimage(handles.axes6);
 % rows = size(image,1);
 % cols = size(image,2);
 % out = zeros(2*rows, 2*cols, size(image,3));
@@ -132,18 +134,19 @@ for i = 1:size(image,1)
     m = m+2;
     n = 1;    
 end
-newImage = uint8(newImage);
+image = uint8(newImage);
 guidata(hObject,handles);
-set(handles.resolusi2, 'String', showResolusi(newImage));
+set(handles.resolusi2, 'String', showResolusi(image));
 axes(handles.axes6);
-figure, imshow(newImage);
+imshow(image);
+figure, imshow(image);
 
 % --- Executes on button press in zoomoutButton.
 function zoomoutButton_Callback(hObject, eventdata, handles)
 % hObject    handle to zoomoutButton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-image = getimage(handles.axes1);
+image = getimage(handles.axes6);
 newImage = zeros(round(size(image,1)/2), round(size(image,2)/2), 3);
 m = 1; n = 1;
 for i = 1:size(newImage,1)
@@ -154,11 +157,12 @@ for i = 1:size(newImage,1)
     m = round(m+2);
     n = 1;
 end
-newImage = uint8(newImage);
+image = uint8(newImage);
 guidata(hObject,handles);
-set(handles.resolusi2, 'String', showResolusi(newImage));
+set(handles.resolusi2, 'String', showResolusi(image));
 axes(handles.axes6);
-figure, imshow(newImage);
+imshow(image);
+figure, imshow(image);
 
 
 % --- Executes on button press in inverseButton.
@@ -166,12 +170,12 @@ function inverseButton_Callback(hObject, eventdata, handles)
 % hObject    handle to inverseButton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-image = getimage(handles.axes1);
-hasil(:,:,:) = 255-image(:,:,:);
+image = getimage(handlex.axes6);
+image(:,:,:) = 255-image(:,:,:);
 guidata(hObject,handles);
 set(handles.resolusi2, 'String', showResolusi(image));
 axes(handles.axes6);
-imshow(hasil);
+imshow(image);
 
 
 % --- Executes on button press in crop.
@@ -179,7 +183,7 @@ function crop_Callback(hObject, eventdata, handles)
 % hObject    handle to crop (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-image = getimage(handles.axes1);
+image = getimage(handles.axes6);
 newRow = round(size(image,1)/2);
 newColumn = round(size(image,2)/2);
 row = newRow./2;
@@ -196,7 +200,7 @@ function BrightnessSum_Callback(hObject, eventdata, handles)
 % hObject    handle to BrightnessSum (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-image = getimage(handles.axes1);
+image = getimage(handles.axes6);
 x = get(handles.jumlah,'String');
 y = str2num(x);
 hasil(:,:,:) = y+image(:,:,:);
@@ -211,7 +215,7 @@ function BrightnessTimes_Callback(hObject, eventdata, handles)
 % hObject    handle to BrightnessTimes (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-image = getimage(handles.axes1);
+image = getimage(handles.axes6);
 x = get(handles.jumlah,'String');
 y = str2num(x);
 hasil(:,:,:) = y*image(:,:,:);
@@ -226,7 +230,7 @@ function GelapSubs_Callback(hObject, eventdata, handles)
 % hObject    handle to GelapSubs (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-image = getimage(handles.axes1);
+image = getimage(handles.axes6);
 x = get(handles.jumlah,'String');
 y = str2num(x);
 hasil(:,:,:) = image(:,:,:)-y;
@@ -240,7 +244,7 @@ function GelapDiv_Callback(hObject, eventdata, handles)
 % hObject    handle to GelapDiv (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-image = getimage(handles.axes1);
+image = getimage(handles.axes6);
 x = get(handles.jumlah,'String');
 y = str2num(x);
 hasil(:,:,:) = image(:,:,:)/y;
@@ -255,7 +259,7 @@ function flipVertical_Callback(hObject, eventdata, handles)
 % hObject    handle to flipVertical (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-image = getimage(handles.axes1);
+image = getimage(handles.axes6);
 hasil(:,:,:) = image(:,:,:);
 m =1; n=1;
 for i=size(image,1):-1:1
@@ -278,7 +282,7 @@ function flipHorizontal_Callback(hObject, eventdata, handles)
 % hObject    handle to flipHorizontal (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-image = getimage(handles.axes1);
+image = getimage(handles.axes6);
 hasil(:,:,:) = image(:,:,:);
 m =1; n=1;
 for i=1:size(image,1)
@@ -300,7 +304,7 @@ function rotate_Callback(hObject, eventdata, handles)
 % hObject    handle to rotate (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-image = getimage(handles.axes1);
+image = getimage(handles.axes6);
 hasil = zeros(size(image,2),size(image,1),3);
 for i= 1:size(image,2);
     for j=1:size(image,1);
@@ -342,7 +346,7 @@ function histogram_Callback(hObject, eventdata, handles)
 % hObject    handle to histogram (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-image = getimage(handles.axes1);
+image = getimage(handles.axes6);
 hasilred = zeros(256,1);
 hasilgreen = zeros(256,1);
 hasilblue = zeros(256,1);
@@ -373,7 +377,7 @@ function rotasi180_Callback(hObject, eventdata, handles)
 % hObject    handle to rotasi180 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-image = getimage(handles.axes1);
+image = getimage(handles.axes6);
 hasil(:,:,:) = image(:,:,:);
 m =1; n=1;
 for i=size(image,1):-1:1
@@ -395,7 +399,7 @@ function rotasi90_Callback(hObject, eventdata, handles)
 % hObject    handle to rotasi90 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-image = getimage(handles.axes1);
+image = getimage(handles.axes6);
 hasil = zeros(size(image,2),size(image,1),3);
 
 for i= 1:size(hasil,1)
@@ -416,7 +420,7 @@ function rotasi270_Callback(hObject, eventdata, handles)
 % hObject    handle to rotasi270 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-image = getimage(handles.axes1);
+image = getimage(handles.axes6);
 hasil = zeros(size(image,2),size(image,1),3);
 
 n = size(image,2);
@@ -440,14 +444,14 @@ function blurring_Callback(hObject, eventdata, handles)
 % hObject    handle to blurring (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-image = getimage(handles.axes1);
+image = getimage(handles.axes6);
 [n l m] = size(image);
 x = 1/9;
 Mask = [x x x; x x x; x x x];
 img = zeros(n+2, l+2, m);
 for i = 1:m
-    for j = 1:l
-        for k = 1:n
+    for j = 1:n
+        for k = 1:l
             img(j+1,k+1,i) = image(j,k,i);
         end
     end
@@ -472,13 +476,13 @@ function edgedetect_Callback(hObject, eventdata, handles)
 % hObject    handle to edgedetect (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-image = getimage(handles.axes1);
+image = getimage(handles.axes6);
 [n l m] = size(image);
 Mask = [0 1 0; 1 -4 1; 0 1 0];
 img = zeros(n+2, l+2, m);
 for i = 1:m
-    for j = 1:l
-        for k = 1:n
+    for j = 1:n
+        for k = 1:l
             img(j+1,k+1,i) = image(j,k,i);
         end
     end
@@ -503,13 +507,13 @@ function sharp_Callback(hObject, eventdata, handles)
 % hObject    handle to sharp (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-image = getimage(handles.axes1);
+image = getimage(handles.axes6);
 [n l m] = size(image);
 Mask = [0 -1 0; -1 5 -1; 0 -1 0];
 img = zeros(n+2, l+2, m);
 for i = 1:m
-    for j = 1:l
-        for k = 1:n
+    for j = 1:n
+        for k = 1:l
             img(j+1,k+1,i) = image(j,k,i);
         end
     end
@@ -760,12 +764,12 @@ b32 = str2num(a);
 a = get(handles.m33,'String');
 b33 = str2num(a);
 Mask = [b11 b12 b13; b21 b22 b23; b31 b32 b33];
-image = getimage(handles.axes1);
+image = getimage(handles.axes6);
 [n l m] = size(image);
 img = zeros(n+2, l+2, m);
 for i = 1:m
-    for j = 1:l
-        for k = 1:n
+    for j = 1:n
+        for k = 1:l
             img(j+1,k+1,i) = image(j,k,i);
         end
     end
@@ -790,7 +794,7 @@ function meanFiltering_Callback(hObject, eventdata, handles)
 % hObject    handle to meanFiltering (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-img = getimage(handles.axes1);
+img = getimage(handles.axes6);
 result = zeros(size(img));
 [r g b] = size(result);
 
@@ -812,7 +816,7 @@ function medianFiltering_Callback(hObject, eventdata, handles)
 % hObject    handle to medianFiltering (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-img = getimage(handles.axes1);
+img = getimage(handles.axes6);
 result = zeros(size(img));
 [r g b] = size(result);
 
@@ -834,7 +838,7 @@ function modusFiltering_Callback(hObject, eventdata, handles)
 % hObject    handle to modusFiltering (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-img = getimage(handles.axes1);
+img = getimage(handles.axes6);
 result = zeros(size(img));
 [r g b] = size(result);
 
@@ -850,3 +854,14 @@ img = uint8(result);
 set(handles.resolusi2, 'String', showResolusi(img));
 axes(handles.axes6);
 imshow(img);
+
+
+% --- Executes on button press in reset.
+function reset_Callback(hObject, eventdata, handles)
+% hObject    handle to reset (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+image = getimage(handles.axes1);
+set(handles.resolusi2, 'String', showResolusi(image));
+axes(handles.axes6);
+imshow(image);
