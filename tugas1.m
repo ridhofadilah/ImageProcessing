@@ -22,7 +22,7 @@ function varargout = tugas1(varargin)
 
 % Edit the above text to modify the response to help tugas1
 
-% Last Modified by GUIDE v2.5 05-Apr-2018 08:30:44
+% Last Modified by GUIDE v2.5 17-Apr-2018 20:30:44
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -854,8 +854,6 @@ img = uint8(result);
 set(handles.resolusi2, 'String', showResolusi(img));
 axes(handles.axes6);
 imshow(img);
-
-
 % --- Executes on button press in reset.
 function reset_Callback(hObject, eventdata, handles)
 % hObject    handle to reset (see GCBO)
@@ -865,3 +863,93 @@ image = getimage(handles.axes1);
 set(handles.resolusi2, 'String', showResolusi(image));
 axes(handles.axes6);
 imshow(image);
+
+
+% --- Executes on button press in segmentasi.
+function segmentasi_Callback(hObject, eventdata, handles)
+% hObject    handle to segmentasi (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+I = getimage(handles.axes6);
+x = get(handles.popupmenu4,'Value');
+putih = uint8(zeros(size(I)));
+biru = uint8(zeros(size(I)));
+kuning = uint8(zeros(size(I)));
+merah = uint8(zeros(size(I)));
+Hijau = uint8(zeros(size(I)));
+Orange = uint8(zeros(size(I)));
+Ungu = uint8(zeros(size(I)));
+Coklat = uint8(zeros(size(I)));
+for i = 1:size(I,1)
+    for j = 1:size(I,2)
+        if ((I(i,j,1) <= 75) && (I(i,j,2) <= 115) && (I(i,j,3) >= 140))
+            biru(i,j,:) = I(i,j,:);
+        end
+        if ((I(i,j,1) >= 130) && (I(i,j,2) <= 80) && (I(i,j,3) <= 80))
+            merah(i,j,:) = I(i,j,:);
+        end
+        if ((I(i,j,1) >= 200) && (I(i,j,2) >= 200)&& (I(i,j,3) <= 50))
+            kuning(i,j,:) = I(i,j,:);
+        end
+        if ((I(i,j,1) >= 210) && (I(i,j,2) >= 210) && (I(i,j,3) >= 210))
+            putih(i,j,:) = I(i,j,:);
+        end
+        if ((I(i,j,1) <= 80) && (I(i,j,2) >= 200) && (I(i,j,3) <= 80))
+            Hijau(i,j,:) = I(i,j,:);
+        end
+        if ((I(i,j,1) >= 175) && (I(i,j,2) >= 70) && (I(i,j,2) <= 130) && (I(i,j,3) <= 40))
+            Orange(i,j,:) = I(i,j,:);
+        end
+        if ((I(i,j,1) >= 175) && (I(i,j,1) <= 230) && (I(i,j,2) >= 70) && (I(i,j,2) <= 130) && (I(i,j,3) >= 175) && (I(i,j,3) <= 230))
+            Ungu(i,j,:) = I(i,j,:);
+        end
+        if ((I(i,j,1) >= 120) && (I(i,j,1) <= 180) && (I(i,j,2) >= 70) && (I(i,j,2) <= 130) && (I(i,j,3) >= 25) && (I(i,j,3) <= 80))
+           Coklat(i,j,:) = I(i,j,:);
+        end
+    end
+end
+
+switch x
+    case 1
+        I = putih;
+    case 2
+        I = biru;
+    case 3
+        I = kuning;
+    case 4
+        I = merah;
+    case 5
+        I = Hijau;
+    case 6
+        I = Orange;
+    case 7
+        I = Ungu;
+    case 8
+        I = Coklat;
+end
+set(handles.resolusi2, 'String', showResolusi(I));
+axes(handles.axes6);
+imshow(I);
+
+
+% --- Executes on selection change in popupmenu4.
+function popupmenu4_Callback(hObject, eventdata, handles)
+% hObject    handle to popupmenu4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns popupmenu4 contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from popupmenu4
+
+
+% --- Executes during object creation, after setting all properties.
+function popupmenu4_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to popupmenu4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
