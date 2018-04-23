@@ -22,7 +22,7 @@ function varargout = tugas1(varargin)
 
 % Edit the above text to modify the response to help tugas1
 
-% Last Modified by GUIDE v2.5 17-Apr-2018 20:30:44
+% Last Modified by GUIDE v2.5 23-Apr-2018 17:17:00
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -953,3 +953,46 @@ function popupmenu4_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes on button press in dilation.
+function dilation_Callback(hObject, eventdata, handles)
+% hObject    handle to dilation (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+img = getimage(handles.axes6);
+image = zeros(size(img));
+MASK=zeros(size(img,1)+2,size(img,2)+2,size(img,3));
+MASK(2:size(MASK,1)-1,2:size(MASK,2)-1,:)=img;
+for i=1:size(MASK,3)
+    for j=2:size(MASK,1)-1
+        for k=2:size(MASK,2)-1
+            image(j-1,k-1,i)=max(max(MASK(j-1:j+1,k-1:k+1,i)));
+        end
+    end
+end
+image=uint8(image);
+set(handles.resolusi2, 'String', showResolusi(image));
+axes(handles.axes6);
+imshow(image);
+
+% --- Executes on button press in erotion.
+function erotion_Callback(hObject, eventdata, handles)
+% hObject    handle to erotion (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+img = getimage(handles.axes6);
+image = zeros(size(img));
+MASK=zeros(size(img,1)+2,size(img,2)+2,size(img,3));
+MASK(2:size(MASK,1)-1,2:size(MASK,2)-1,:)=img;
+for i=1:size(MASK,3)
+    for j=2:size(MASK,1)-1
+        for k=2:size(MASK,2)-1
+            image(j-1,k-1,i)=min(min(MASK(j-1:j+1,k-1:k+1,i)));
+        end
+    end
+end
+image=uint8(image);
+set(handles.resolusi2, 'String', showResolusi(image));
+axes(handles.axes6);
+imshow(image);
